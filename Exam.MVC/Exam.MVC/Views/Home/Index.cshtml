@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+
+<input type="button" value="Token Al" onclick="getToken();"/>
+<br />
+<input type="button" value="Users Göster" onclick="getValues();" />
+<br />
+<input type="text" value="" id="Token"/>
+
+<script>
+    window.Token = null;
+    var obj = new Object();
+   
+       var getToken= function () {
+            $.ajax({
+                type: 'POST',
+                url: 'http://test-jwt.hazir.net/users/authenticate',
+                data: '{username:"test", password:"123456"}',
+                contentType: 'application/json',
+                success: function (resultData) {
+                    console.log(resultData.token);
+                    window.Token = resultData.token;
+                    $("#Token").val(resultData.token);
+                },
+                error: function (resultData) {
+                    console.log(resultData);
+                }
+            });
+        },
+        getValues= function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://test-jwt.hazir.net/users',
+
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + window.Token);// values alanına ulaşırken token ı eklemiş oldukç.
+                },
+                data: {},
+                success: function (data) {
+                    obj = data;
+                    console.log(obj);
+                    postValues();
+                },
+
+                error: function (data) {
+                }
+            });
+        }
+        postValues= function () {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:54174/api/user',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + window.Token);// values alanına ulaşırken token ı eklemiş oldukç.
+                },
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(obj),
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+    
+
+</script>
