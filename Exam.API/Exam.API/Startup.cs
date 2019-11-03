@@ -28,7 +28,7 @@ namespace Exam.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => {
-                options.UseSqlServer("Server=KZL-JAVAORT-C10;Database=finalexam; User Id=sa;Password=123");
+                options.UseSqlServer("Server=BIS-1014896201;Database=finalexam; Trusted_Connection=True;");
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

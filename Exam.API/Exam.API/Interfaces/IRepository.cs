@@ -9,6 +9,6 @@ namespace Exam.API.Interfaces
         T Get(int id);
         T Add(T entity);
         T Update(T entity);
-        void Delete(int id);
+        bool Delete(int id);
     }
 }

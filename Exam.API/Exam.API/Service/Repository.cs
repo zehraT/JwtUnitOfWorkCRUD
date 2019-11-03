@@ -20,11 +20,19 @@ namespace Exam.API.Service
             return entity;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            T entity = Get(id);
-            _repository.Remove(entity);
+            var result = false;
 
+            var entity = Get(id);
+
+            if (entity != null)
+            {
+                _repository.Remove(entity);
+                result = true;
+            }
+
+            return result;
         }
 
         public T Get(int id)
@@ -42,5 +50,6 @@ namespace Exam.API.Service
             _repository.Update(entity);
             return entity;
         }
+        
     }
 }

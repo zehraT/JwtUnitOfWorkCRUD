@@ -1,6 +1,7 @@
 ﻿using Exam.API.Interfaces;
 using Exam.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace Exam.API.Controllers
@@ -15,21 +16,21 @@ namespace Exam.API.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET api/values
+        // GET api/users
         [HttpGet]
         public IActionResult Get()
         {
             var users = _unitOfWork.UserRepository.GetAll();
             return new JsonResult(users);
         }
-        // GET api/values/4
+        // GET api/user/4
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             return new JsonResult(_unitOfWork.UserRepository.Get(id));
         }
 
-        // POST api/values
+        // POST api/user
         [HttpPost]
         public IActionResult Post([FromBody] List<User> users)
         {
@@ -46,7 +47,7 @@ namespace Exam.API.Controllers
             return new JsonResult(users);
         }
 
-        // PUT api/values/4
+        // PUT api/user/4
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] User user)
         {
@@ -57,21 +58,13 @@ namespace Exam.API.Controllers
             _unitOfWork.Complete();
             return new JsonResult(user);
         }
-
-        // DELETE api/values/4
+        
+        // DELETE: api/User/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteUser(int id)
         {
-            var result = _unitOfWork.UserRepository.Get(id);
-            if (result != null)
-            {
-                _unitOfWork.UserRepository.Delete(id);
-                _unitOfWork.Complete();
-            }
-
-            return new JsonResult(result);
+            return new JsonResult(new Tuple<bool, int>(_unitOfWork.UserRepository.Delete(id), _unitOfWork.Complete()));
         }
-
 
     }
 }
