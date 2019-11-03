@@ -13,17 +13,17 @@ namespace Exam.API.Service
         }
    
 
-        public bool FindByUser(int id)
-        {
-            bool result = false;
-            var user = _dataContext.Users.Where(x => x.username.Equals(id));
+        //public bool FindByUser(int id)
+        //{
+        //    bool result = false;
+        //    var user = _dataContext.Users.Where(x => x.username.Equals(id));
 
-            if (user != null)
-            {
-                result = true;
-            }
+        //    if (user != null)
+        //    {
+        //        result = true;
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
     }
 }

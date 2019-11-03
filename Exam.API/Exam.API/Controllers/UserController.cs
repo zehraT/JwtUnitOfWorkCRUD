@@ -45,13 +45,13 @@ namespace Exam.API.Controllers
 
             return new JsonResult(users);
         }
-      
+
         // PUT api/values/4
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] User user)
         {
             if (id != user.id)
-            return BadRequest();
+                return BadRequest();
 
             _unitOfWork.UserRepository.Update(user);
             _unitOfWork.Complete();
@@ -71,6 +71,7 @@ namespace Exam.API.Controllers
 
             return new JsonResult(result);
         }
+
 
     }
 }
